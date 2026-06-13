@@ -163,52 +163,35 @@
         </form>
 
         <aside class="bg-white rounded-lg p-8">
-          <h2 class="text-lg font-bold uppercase mb-8">Summary</h2>
-
-          <div class="flex flex-col gap-6 mb-8">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-4">
-                <div
-                  class="w-16 h-16 bg-zinc-100 rounded-lg flex items-center justify-center"
-                >
-                  <img
-                    src="./assets/cart/image-xx99-mark-two-headphones.jpg"
-                    alt="product"
-                    class="w-10"
-                  />
-                </div>
-                <div>
-                  <p class="font-bold">XX99 MK II</p>
-                  <p class="text-gray-500 font-bold text-sm">$ 2,999</p>
-                </div>
-              </div>
-              <p class="text-gray-500 font-bold">x1</p>
-            </div>
+          <div class="b flex gap-25">
+            <h2 class="text-lg font-bold uppercase mb-8">Summary</h2>
+            <p class="removeAll text-gray-500">Remove all</p>
           </div>
+          <div class="summary-items flex flex-col gap-6 mb-8"></div>
 
           <div class="flex flex-col gap-2 mb-8">
             <div class="flex justify-between">
               <span class="text-gray-500 uppercase text-sm">Total</span>
-              <span class="font-bold text-lg">$ 5,396</span>
+              <span class="totalPrice font-bold text-lg"></span>
             </div>
             <div class="flex justify-between">
               <span class="text-gray-500 uppercase text-sm">Shipping</span>
-              <span class="font-bold text-lg">$ 50</span>
+              <span class="shippingPrice font-bold text-lg"></span>
             </div>
             <div class="flex justify-between">
               <span class="text-gray-500 uppercase text-sm"
                 >VAT (Included)</span
               >
-              <span class="font-bold text-lg">$ 1,079</span>
+              <span class="vatPrice font-bold text-lg"></span>
             </div>
             <div class="flex justify-between mt-4">
               <span class="text-gray-500 uppercase text-sm">Grand Total</span>
-              <span class="font-bold text-lg text-orange-400">$ 5,446</span>
+              <span class="grandTotal font-bold text-lg text-orange-400"></span>
             </div>
           </div>
 
           <button
-            class="w-full bg-orange-400 text-white py-4 uppercase font-bold hover:bg-black"
+            class="continue w-full bg-orange-400 text-white py-4 uppercase font-bold hover:bg-black"
           >
             Continue & Pay
           </button>
@@ -244,5 +227,99 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      const continuee = document.querySelector(".continue");
+      continuee.addEventListener("click", function () {
+        window.alert("Your order was successfully paid !");
+      });
+
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const summary = document.querySelector(".summary-items");
+
+      cart.forEach((product) => {
+        const item = document.createElement("div");
+
+        item.innerHTML = `
+
+          <div class="flex gap-6 items-center justify-between">
+        <div class="flex items-center gap-4">
+          <img src="${product.image}" class="w-10">
+          <div>
+            <p class="font-bold">${product.name}</p>
+            <p>$${product.price}</p>
+          </div>
+
+        </div>
+
+        <p>x${product.quantity}</p>
+         <img class="bin w-5 h-5" class="bin" src="assets/bin.png" />
+
+        </div>
+        `;
+        summary.appendChild(item);
+
+        //
+        //
+        //
+
+        function updateTotals() {
+          let total = 0;
+
+          cart.forEach((product) => {
+            total += product.price * product.quantity;
+          });
+
+          const shipping = cart.length ? 50 : 0;
+          const vat = total * 0.2;
+          const grandTotal = total + shipping + vat;
+
+          document.querySelector(".totalPrice").textContent =
+            "$" + total.toFixed(2);
+          document.querySelector(".shippingPrice").textContent =
+            "$" + shipping.toFixed(2);
+          document.querySelector(".vatPrice").textContent =
+            "$" + vat.toFixed(2);
+          document.querySelector(".grandTotal").textContent =
+            "$" + grandTotal.toFixed(2);
+        }
+
+        //
+        //
+        //
+        //bin
+        const bin = item.querySelector(".bin");
+
+        bin.addEventListener("click", function () {
+          const index = cart.indexOf(product);
+
+          cart.splice(index, 1);
+
+          localStorage.setItem("cart", JSON.stringify(cart));
+
+          summary.removeChild(item);
+
+          updateTotals();
+        });
+
+        //
+        //
+        //
+        //
+
+        const removeAll = document.querySelector(".removeAll");
+        removeAll.addEventListener("click", function () {
+          cart.length = 0;
+
+          localStorage.setItem("cart", JSON.stringify(cart));
+
+          summary.innerHTML = "";
+          updateTotals();
+        });
+
+        updateTotals();
+      });
+    </script>
   </body>
 </html>

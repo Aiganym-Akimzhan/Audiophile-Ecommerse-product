@@ -183,11 +183,11 @@
                       <p class="countRes text-[20px] ">1</p>
                       <button class="plus px-5 py-2 hover:bg-zinc-200">+</button>
                     </div>
-               
+                 <a href="checkout.html">
                     <button class="addCart bg-orange-400 h-13 w-40 text-white hover:bg-black">
                       Add to cart
                     </button>
-               
+                </a>
 
                   </div>
                 </div>
@@ -311,6 +311,7 @@
 
                   </h3>
                  <a href ="product-zx9-speaker.html">
+                 
 
                   <button
                     class="bg-orange-400 text-white px-8 py-3 uppercase  text-sm font-medium hover:bg-black"
@@ -343,209 +344,22 @@
               countRes.textContent = number;
             }
           });
+
           const addCart = Mainproduct.querySelector(".addCart");
 
           addCart.addEventListener("click", function () {
-            const checkout = document.createElement("div");
-            checkout.innerHTML = `
-               <div class="max-w-6xl mx-auto px-6 py-12">
-        <a
-          href=""
-          class="text-gray-500 hover:text-orange-400 mb-10 block"
-          >Go Back</a
-        >
+            const product = {
+              name: item.name,
+              price: item.price,
+              image: item.image.desktop,
+              quantity: number,
+            };
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          <form class="lg:col-span-2 bg-white rounded-lg p-8 md:p-12 shadow-sm">
-            <h1 class="text-3xl font-bold uppercase mb-10">Checkout</h1>
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-            <div class="mb-12">
-              <h2 class="text-orange-400 text-sm font-bold uppercase mb-4">
-                Billing Details
-              </h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="flex flex-col gap-2">
-                  <label class="font-bold text-xs">Name</label>
-                  <input
-                    type="text"
-                    placeholder="Alexei Ward"
-                    class="border rounded-lg p-4 focus:border-orange-400 font-bold"
-                  />
-                </div>
-                <div class="flex flex-col gap-2">
-                  <label class="font-bold text-xs">Email Address</label>
-                  <input
-                    type="email"
-                    placeholder="alexei@mail.com"
-                    class="border rounded-lg p-4 focus:border-orange-400 font-bold"
-                  />
-                </div>
-                <div class="flex flex-col gap-2">
-                  <label class="font-bold text-xs">Phone Number</label>
-                  <input
-                    type="tel"
-                    placeholder="+1 202-555-0136"
-                    class="border rounded-lg p-4 focus:border-orange-400 font-bold"
-                  />
-                </div>
-              </div>
-            </div>
+            cart.push(product);
 
-            <div class="mb-12">
-              <h2 class="text-orange-400 text-sm font-bold uppercase mb-4">
-                Shipping Info
-              </h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="flex flex-col gap-2 md:col-span-2">
-                  <label class="font-bold text-xs">Address</label>
-                  <input
-                    type="text"
-                    placeholder="1137 Williams Avenue"
-                    class="border rounded-lg p-4 border-orange-400 font-bold"
-                  />
-                </div>
-                <div class="flex flex-col gap-2">
-                  <label class="font-bold text-xs">ZIP Code</label>
-                  <input
-                    type="text"
-                    placeholder="10001"
-                    class="border rounded-lg p-4 border-orange-400 font-bold"
-                  />
-                </div>
-                <div class="flex flex-col gap-2">
-                  <label class="font-bold text-xs">City</label>
-                  <input
-                    type="text"
-                    placeholder="New York"
-                    class="border rounded-lg p-4 border-orange-400 font-bold"
-                  />
-                </div>
-                <div class="flex flex-col gap-2">
-                  <label class="font-bold text-xs">Country</label>
-                  <input
-                    type="text"
-                    placeholder="United States"
-                    class="border rounded-lg p-4 border-orange-400 font-bold"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h2 class="text-orange-400 text-sm font-bold uppercase mb-4">
-                Payment Details
-              </h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <label class="font-bold text-xs">Payment Method</label>
-                <div class="flex flex-col gap-4">
-                  <label
-                    class="flex items-center gap-4 border rounded-lg p-4 hover:border-orange-400"
-                  >
-                    <input
-                      type="radio"
-                      name="payment"
-                      class="accent-orange-400"
-                      checked
-                    />
-                    <span class="font-bold">e-Money</span>
-                  </label>
-                  <label
-                    class="flex items-center gap-4 border rounded-lg p-4 hover:border-orange-400"
-                  >
-                    <input
-                      type="radio"
-                      name="payment"
-                      class="accent-orange-400"
-                    />
-                    <span class="font-bold text-sm">Cash on Delivery</span>
-                  </label>
-                </div>
-
-                <div class="flex flex-col gap-2">
-                  <label class="font-bold text-xs">e-Money Number</label>
-                  <input
-                    type="text"
-                    placeholder="238521993"
-                    class="border rounded-lg p-4 border-orange-400 font-bold"
-                  />
-                </div>
-                <div class="flex flex-col gap-2">
-                  <label class="font-bold text-xs">e-Money PIN</label>
-                  <input
-                    type="text"
-                    placeholder="6891"
-                    class="border rounded-lg p-4 border-orange-400 font-bold"
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
-
-          <aside class="bg-white rounded-lg p-8">
-            <h2 class="text-lg font-bold uppercase mb-8">Summary</h2>
-
-            <div class="flex flex-col gap-6 mb-8">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                  <div
-                    class="w-16 h-16 bg-zinc-100 rounded-lg flex items-center justify-center"
-                  >
-                    <img
-                      src="${item.image.desktop}"
-                      alt="product"
-                      class="w-10"
-                    />
-                  </div>
-                  <div>
-                    <p class="font-bold">${item.name}</p>
-                    <p class="text-gray-500 font-bold text-sm">$${item.price}</p>
-                  </div>
-                </div>
-                <p class="text-gray-500 font-bold">x1</p>
-              </div>
-            </div>
-
-            <div class="flex flex-col gap-2 mb-8">
-              <div class="flex justify-between">
-                <span class="text-gray-500 uppercase text-sm">Total</span>
-                <span class="font-bold text-lg">$${item.price}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-500 uppercase text-sm">Shipping</span>
-                <span class="font-bold text-lg">$ 50</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-500 uppercase text-sm"
-                  >VAT (Included)</span
-                >
-                <span class="font-bold text-lg">$${item.price * 0.5}</span>
-              </div>
-              <div class="flex justify-between mt-4">
-                <span class="text-gray-500 uppercase text-sm">Grand Total</span>
-                <span class="font-bold text-lg text-orange-400">$${item.price + 50 + item.price * 0.2}</span>
-              </div>
-            </div>
-
-            <button
-              class="continuee w-full bg-orange-400 text-white py-4 uppercase font-bold hover:bg-black"
-            >
-              Continue & Pay
-            </button>
-          </aside>
-        </div>
-      </div>`;
-
-            let continuee = checkout.querySelector(".continuee");
-            continuee.addEventListener("click", function () {
-              window.alert("Thank you for your purchase!");
-            });
-            productsContainer.appendChild(checkout);
-            productsContainer.removeChild(Mainproduct);
-            productsContainer.removeChild(features);
-            productsContainer.removeChild(gallery);
-            productsContainer.removeChild(other);
-            Suggest.style.display = "none";
-            About.style.display = "none";
+            localStorage.setItem("cart", JSON.stringify(cart));
           });
         }
       }
